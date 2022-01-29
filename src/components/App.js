@@ -167,7 +167,7 @@ function App() {
           console.log(`Ошибка: ${err}`);
         });
     }
-  }, [isLogOn]);
+  }, [history]);
 
   React.useEffect(()=>{
     handleTokenCheck()
