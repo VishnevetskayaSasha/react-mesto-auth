@@ -3,7 +3,6 @@ import WindowWithRegistrationAndLogin from "./WindowWithRegistrationAndLogin";
 import  {withRouter}  from "react-router-dom";
 
 function Login(props) {
-  console.log(props)
   return (
     <WindowWithRegistrationAndLogin
       title="Вход"

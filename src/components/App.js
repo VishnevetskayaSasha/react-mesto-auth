@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Switch, Redirect, useHistory, useLocation}  from "react-router-dom";
+import { Route, Switch, Redirect, useHistory}  from "react-router-dom";
 import "../index.css";
 import Header from "./Header.js";
 import Main from "./Main.js";
@@ -33,7 +33,6 @@ function App() {
   const [userEmail, setUserEmail] = React.useState("");
   const [userPassword, setUserPassword] = React.useState("");
   const history = useHistory();
-  //const location = useLocation();
 
   // Получаем данные с сервера (Данные профиля + данные карточек)
   React.useEffect(() => {
@@ -151,16 +150,14 @@ function App() {
     if (localStorage.getItem("jwt")) {
       const jwt = localStorage.getItem("jwt");
       // проверим токен
-      auth
-        .tokenValidity(jwt)
+      auth.tokenValidity(jwt)
         .then((res) => {
           if (res) {
             // выполняется вход в систему
             setIsLogOn(true);
             //отображаем email пользователя
             setUserEmail(res.data.email);
-            //
-           history.push("/");
+            history.push("/");
           }
         })
         .catch((err) => {
@@ -180,7 +177,6 @@ function App() {
       .then((res) => {
         // перебрасываем в Main
         history.push("/");
-        console.log(history)
         setUserEmail(res.data.email);
         setUserPassword(data.password);
         // открываем информационный попап
@@ -216,8 +212,7 @@ function App() {
       })
   }
 
-  // Выход из системы  
-  // тут еще раз все проверить, когда разберусь с входом 
+  // Выход из системы 
   function handleSignOut() {
     setIsLogOn(false);
     // перебрасываем на страницу входв

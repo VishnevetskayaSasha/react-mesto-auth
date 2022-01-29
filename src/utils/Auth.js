@@ -45,7 +45,6 @@ class Auth {
 
   // проверка валидности токена и получения email для вставки в шапку сайта:
   tokenValidity(token) {
-    console.log(token)
     return fetch(`${this._url}/users/me`, { 
       method: "GET",  
       headers: {
