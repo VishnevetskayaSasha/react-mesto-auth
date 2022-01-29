@@ -3,7 +3,6 @@
   height: 24px;
   background-image: url(../../../images/edit-button.svg);
   background-color: #000;
-  background-size: cover;
   border: none;
   opacity: 1;
   transition: opacity 0.5s;
