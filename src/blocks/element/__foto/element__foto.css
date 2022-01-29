@@ -1,0 +1,10 @@
+.element__foto {
+  width: 282px;
+  display: block;
+  height: 282px;
+  min-height: 282px;
+  border-radius: 10px 10px 0 0;
+  object-fit: cover;
+  cursor: pointer;
+  color: black;
+}

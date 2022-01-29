@@ -1,0 +1,9 @@
+.popup__img{
+  background-image: url("../../../images/successfully.svg");
+  margin: 60px auto 0;
+  width: 120px;
+  height: 120px;
+  background-position: center;
+  background-repeat: no-repeat;
+    
+}

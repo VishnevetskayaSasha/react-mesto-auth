@@ -1,0 +1,10 @@
+.header__item{
+  font-size: 18px;
+  line-height: 22px;
+  color: #FFFFFF;
+  text-decoration: none;
+}
+
+.header__item:last-of-type{
+  margin-left: 24px;
+}
