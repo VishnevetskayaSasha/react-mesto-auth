@@ -1,6 +1,6 @@
 {
-  "homepage": "http://VishnevetskayaSasha.github.io/mesto-react-auth",
-  "name": "mesto-react-auth",
+  "homepage": "http://VishnevetskayaSasha.github.io/react-mesto-auth",
+  "name": "react-mesto-aut",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
