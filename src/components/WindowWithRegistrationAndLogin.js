@@ -1,11 +1,8 @@
 import React from 'react';
-import { Link, useLocation} from "react-router-dom";
+import { Switch, Route, Link } from "react-router-dom";
 
 function WindowWithRegistrationAndLogin(props){
 
- 
-  const location = useLocation();
-  const locationSignUp = location.pathname === "/sign-up"; // авторизация пользователя. 
   const [ values, setValues ] = React.useState({});
     
     function handleChange(evt) {
@@ -50,11 +47,14 @@ function WindowWithRegistrationAndLogin(props){
           {props.text}
         </button>
       </form>
-      {locationSignUp && (
-        <p className="welcome__text">Уже зарегистрированы? <Link to={"/sign-in"} className="welcome__login-link">Войти</Link> </p>
-      )}
+      <Switch>
+        <Route exact path="/sign-up">
+          <p className="welcome__text">Уже зарегистрированы? <Link to={"/sign-in"} className="welcome__login-link">Войти</Link> </p>
+        </Route>
+      </Switch>
     </div>
   )
 }
 
 export default WindowWithRegistrationAndLogin;
+

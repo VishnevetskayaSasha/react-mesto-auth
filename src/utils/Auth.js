@@ -12,7 +12,7 @@ class Auth {
   }
 
   // регистрация
-  registration(data) {
+  register(data) {
     console.log(data)
     return fetch(`${this._url}/signup`, { 
       method: "POST",  
@@ -44,7 +44,7 @@ class Auth {
   }
 
   // проверка валидности токена и получения email для вставки в шапку сайта:
-  tokenValidity(token) {
+  checkToken(token) {
     return fetch(`${this._url}/users/me`, { 
       method: "GET",  
       headers: {

@@ -1,36 +1,36 @@
 import logo from '../logo.svg';
 import React from 'react';
-import {Link, useLocation} from "react-router-dom";
+import { Switch, Route, Link } from "react-router-dom";
+
 
 function Header(props) {
-
-
-  const location = useLocation();
-  const locationSignIn = location.pathname === "/sign-in"; //регистрация пользователя.
-
-  //выход из системы
-  function handleSignOut() {
-    props.onSignOut();
-  }
-
-  // вход в систему
-  function handleSignIn() {
-    
-  }
 
   return (
     <header className="header header__page">
       <img src={logo} alt="Место логотип" className="header__logo"/>
       <nav className="header__menu">
-        <p className="header__email">{props.isLogOn ? props.userEmail : "" }</p> 
-        {!locationSignIn ?
-        <Link onClick={!props.isLogOn ? handleSignIn : handleSignOut} className="header__item" to={"/sign-in"}>{props.isLogOn ? "Выйти" : "Войти"}</Link>
-        :
-        <Link className="header__item" to={"/sign-up"}>{!props.isLogOn ? "Регистрация" : ""}</Link>
-        }
-        </nav>
+      <Switch>
+        <Route exact path="/">
+          <p className="header__email">{props.userEmail}</p>
+          <Link to='/sign-in' className="header__item" onClick={props.onSignOut}>Выйти</Link>         
+        </Route>
+        <Route exact path="/sign-in">
+          <Link to="/sign-up" className="header__item">
+            Регистрация
+          </Link>
+        </Route>
+        <Route exact path="/sign-up">
+          <Link to="/sign-in" className="header__item">
+            Войти
+          </Link>
+        </Route>
+      </Switch>
+      </nav>
     </header>
   ) 
 }
 
 export default Header;
+
+
+        

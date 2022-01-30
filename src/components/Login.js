@@ -1,6 +1,5 @@
 import React from 'react';
 import WindowWithRegistrationAndLogin from "./WindowWithRegistrationAndLogin";
-import  {withRouter}  from "react-router-dom";
 
 function Login(props) {
   return (
@@ -8,9 +7,9 @@ function Login(props) {
       title="Вход"
       name="login"
       text="Войти"
-      onSubmit={props.onSubmitLogin}
+      onSubmit={props.onSubmit}
     />
   )
 }
 
-export default withRouter(Login);
+export default Login;

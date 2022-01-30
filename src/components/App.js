@@ -1,6 +1,5 @@
-import React from "react";
+import React, { useState, useEffect, useCallback } from 'react'
 import { Route, Switch, Redirect, useHistory}  from "react-router-dom";
-import "../index.css";
 import Header from "./Header.js";
 import Main from "./Main.js";
 import Footer from "./Footer.js";
@@ -20,22 +19,21 @@ import ProtectedRoute from "./ProtectedRoute"; // импортируем HOC
 
 function App() {
 
-  const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false);
-  const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
-  const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(false);
-  const [selectedCard, setSelectedCard] = React.useState({link: "", name: ""});
-  const [isInfoTooltipPopupOpen, setIsInfoTooltipPopupOpen] = React.useState(false);
-  const [isSuccessfullyTooltip, setIsSuccessfullyTooltip] = React.useState(false);
-  const [isLogOn, setIsLogOn] = React.useState(false);
+  const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
+  const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
+  const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
+  const [selectedCard, setSelectedCard] = useState({link: "", name: ""});
+  const [isInfoTooltipPopupOpen, setIsInfoTooltipPopupOpen] = useState(false);
+  const [isSuccessfullyTooltip, setIsSuccessfullyTooltip] = useState(false);
+  const [isLogOn, setIsLogOn] = useState(false);
 
-  const [currentUser, setCurrentUser] = React.useState({});
-  const [cards, setCards] = React.useState([]);
-  const [userEmail, setUserEmail] = React.useState("");
-  const [userPassword, setUserPassword] = React.useState("");
+  const [currentUser, setCurrentUser] = useState({});
+  const [cards, setCards] = useState([]);
+  const [userEmail, setUserEmail] = useState("");
   const history = useHistory();
 
   // Получаем данные с сервера (Данные профиля + данные карточек)
-  React.useEffect(() => {
+  useEffect(() => {
     api.getUserInfo() 
       .then((userData) => {
       setCurrentUser(userData);
@@ -51,13 +49,6 @@ function App() {
         console.log(`Ошибка: ${err}`);
       })
   }, [])
-
-  function closeInfoTooltipPopup() {
-    closeAllPopups();
-    if (isSuccessfullyTooltip) {
-      handleIsLogin({email: userEmail, password: userPassword});
-    }
-  }
 
   function handleEditProfileClick() {
     setIsEditProfilePopupOpen(true)
@@ -129,7 +120,7 @@ function App() {
       .catch((err) => {
         console.log(`Ошибка: ${err}`);
       })
-}
+  }
 
 
   function handleCardDelete(card) {
@@ -144,13 +135,13 @@ function App() {
   }
 
   //Хук для проверки токена при каждом монтировании компонента App
-  const handleTokenCheck = React.useCallback(() => {
+  const handleTokenCheck = useCallback(() => {
     // если у пользователя есть токен в localStorage, 
   // эта функция проверит, действующий он или нет
     if (localStorage.getItem("jwt")) {
       const jwt = localStorage.getItem("jwt");
       // проверим токен
-      auth.tokenValidity(jwt)
+      auth.checkToken(jwt)
         .then((res) => {
           if (res) {
             // выполняется вход в систему
@@ -166,33 +157,9 @@ function App() {
     }
   }, [history]);
 
-  React.useEffect(()=>{
+  useEffect(()=>{
     handleTokenCheck()
-  }, [history])
-
-
-// регистрация
-  function handleIsRegistration(data) {
-    auth.registration(data)
-      .then((res) => {
-        // перебрасываем в Main
-        history.push("/");
-        setUserEmail(res.data.email);
-        setUserPassword(data.password);
-        // открываем информационный попап
-        setIsInfoTooltipPopupOpen(true);
-        // попап проинформирует об успешной регистрации
-        setIsSuccessfullyTooltip(true);
-        
-      })
-      .catch((err) => {
-        console.log(`Ошибка: ${err}`);
-        // открываем информационный попап
-        setIsInfoTooltipPopupOpen(true);
-        // попап проинформирует об  ошибке
-        setIsSuccessfullyTooltip(false);
-      })
-  }
+  }, [])
 
   // вход
   function handleIsLogin(data) {
@@ -211,6 +178,30 @@ function App() {
         setIsSuccessfullyTooltip(false);
       })
   }
+
+
+  // регистрация
+  function handleIsRegistration(data) {
+    auth.register(data)
+      .then((res) => {
+          // перебрасываем в Main
+          history.push("/sign-in");
+          // открываем информационный попап
+          setIsInfoTooltipPopupOpen(true);
+          // попап проинформирует об успешной регистрации
+          setIsSuccessfullyTooltip(true); 
+          console.log(res)   
+      })
+      .catch((err) => {
+        console.log(`Ошибка: ${err}`);
+        // открываем информационный попап
+        setIsInfoTooltipPopupOpen(true);
+        // попап проинформирует об  ошибке
+        setIsSuccessfullyTooltip(false);
+      })
+  }
+
+  
 
   // Выход из системы 
   function handleSignOut() {
@@ -246,12 +237,12 @@ function App() {
             />
             <Route path="/sign-up">
               <Register
-               onSubmitRegistration={handleIsRegistration}
+               onSubmit={handleIsRegistration}
               />
             </Route>
             <Route path="/sign-in">
               <Login
-              onSubmitLogin={handleIsLogin}
+              onSubmit={handleIsLogin}
               />
             </Route>
             <Route>
@@ -286,7 +277,7 @@ function App() {
         />
         <InfoTooltip // попап успешная регистрация - ошибка
           isOpen={isInfoTooltipPopupOpen}
-          onClose={closeInfoTooltipPopup}
+          onClose={closeAllPopups}
           isSuccessfully={isSuccessfullyTooltip}
         />
       </div> 

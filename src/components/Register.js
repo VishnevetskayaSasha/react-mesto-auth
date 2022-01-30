@@ -1,6 +1,5 @@
 import React from 'react';
 import WindowWithRegistrationAndLogin from "./WindowWithRegistrationAndLogin";
-import  {withRouter}  from "react-router-dom";
 
 
 function Register(props) {
@@ -9,9 +8,9 @@ function Register(props) {
       title="Регистрация"
       name="registration"
       text="Зарегистрироваться"
-      onSubmit={props.onSubmitRegistration}
+      onSubmit={props.onSubmit}
     />
   )
 }
 
-export default withRouter(Register);
+export default Register;
