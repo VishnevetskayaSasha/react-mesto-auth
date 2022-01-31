@@ -44,7 +44,7 @@ function WindowWithRegistrationAndLogin(props){
         <button 
           type="submit" 
           className="welcome__button">
-          {props.text}
+           {props.text}
         </button>
       </form>
       <Switch>

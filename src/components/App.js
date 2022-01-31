@@ -108,7 +108,6 @@ function App() {
       })
   }
 
-  
   function handleCardLike(card) {
     // Снова проверяем, есть ли уже лайк на этой карточке
     const isLiked = card.likes.some(i => i._id === currentUser._id);
@@ -166,9 +165,7 @@ function App() {
     auth.login(data)
       .then((res) => {
         localStorage.setItem("jwt", res.token);
-        setIsLogOn(true);
-        history.push("/");
-        setUserEmail(data.email);
+       handleTokenCheck()
       })
       .catch((err) => {
         console.log(`Ошибка: ${err}`);
@@ -184,13 +181,12 @@ function App() {
   function handleIsRegistration(data) {
     auth.register(data)
       .then((res) => {
-          // перебрасываем в Main
-          history.push("/sign-in");
           // открываем информационный попап
-          setIsInfoTooltipPopupOpen(true);
+         setIsInfoTooltipPopupOpen(true);
           // попап проинформирует об успешной регистрации
-          setIsSuccessfullyTooltip(true); 
-          console.log(res)   
+         setIsSuccessfullyTooltip(true); 
+         handleIsLogin(data)
+          console.log(res)  
       })
       .catch((err) => {
         console.log(`Ошибка: ${err}`);
@@ -246,7 +242,7 @@ function App() {
               />
             </Route>
             <Route>
-              <Redirect to={!isLogOn ? "/sign-in" : "/"} />
+              <Redirect to={!isLogOn ? "/sign-up" : "/"} />
             </Route>
           </Switch>
           {isLogOn && <Footer />}
