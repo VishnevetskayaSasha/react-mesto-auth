@@ -185,7 +185,9 @@ function App() {
          setIsInfoTooltipPopupOpen(true);
           // попап проинформирует об успешной регистрации
          setIsSuccessfullyTooltip(true); 
-         handleIsLogin(data)
+         setTimeout(() => {
+          handleIsLogin(data)
+         }, 300)
           console.log(res)  
       })
       .catch((err) => {
